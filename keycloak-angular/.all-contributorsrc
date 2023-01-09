@@ -1,0 +1,69 @@
+{
+  "projectName": "keycloak-angular",
+  "projectOwner": "mauriciovigolo",
+  "repoType": "github",
+  "repoHost": "https://github.com",
+  "files": [
+    "README.md"
+  ],
+  "imageSize": 100,
+  "commit": false,
+  "contributors": [
+    {
+      "login": "jonkoops",
+      "name": "Jon Koops",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/695720?s=400&v=4",
+      "profile": "https://github.com/jonkoops",
+      "contributions": [
+      ]
+    }, 
+    {
+      "login": "frederikprijck",
+      "name": "Frederik Prijck",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/2146903?v=4",
+      "profile": "https://github.com/frederikprijck",
+      "contributions": [
+      ]
+    },
+    {
+      "login": "jmparra",
+      "name": "jmparra",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/980278?v=4",
+      "profile": "https://github.com/jmparra",
+      "contributions": [
+      ]
+    },
+    {
+      "login": "marcelnem",
+      "name": "Marcel Német",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/6547340?v=4",
+      "profile": "https://github.com/marcelnem",
+      "contributions": [
+      ]
+    },
+    {
+      "login": "mauriciovigolo",
+      "name": "Mauricio Gemelli Vigolo",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/676270?v=4",
+      "profile": "https://github.com/mauriciovigolo",
+      "contributions": [
+      ]
+    },
+    {
+      "login": "aelkz",
+      "name": "Raphael Alex Silva Abreu",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/14264577?v=4",
+      "profile": "https://github.com/aelkz",
+      "contributions": [
+      ]
+    },
+    {
+      "login": "sharebear",
+      "name": "Jonathan Share",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/161351?s=460&v=4",
+      "profile": "https://github.com/sharebear",
+      "contributions": [
+      ]
+    }   
+  ]
+}

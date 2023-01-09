@@ -1,0 +1,82 @@
+{
+  "name": "keycloak-angular",
+  "version": "13.0.0",
+  "description": "Easy Keycloak setup for Angular applications",
+  "scripts": {
+    "clean": "shx rm -rf ./dist/",
+    "build": "npm run clean && ng build keycloak-angular --configuration production",
+    "test": "ng test keycloak-angular",
+    "lint": "ng lint && prettier -c .",
+    "showcase:keycloak": "docker compose --project-directory projects/example up",
+    "showcase:example": "ng serve example",
+    "showcase": "concurrently \"npm run showcase:keycloak\" \"npm run showcase:example\"",
+    "lint:fix": "prettier --write .",
+    "typecheck": "tsc --noEmit"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/mauriciovigolo/keycloak-angular.git"
+  },
+  "author": {
+    "name": "Mauricio Gemelli Vigolo",
+    "email": "@mauriciovigolo",
+    "url": "https://github.com/mauriciovigolo"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/mauriciovigolo/keycloak-angular/issues"
+  },
+  "homepage": "https://github.com/mauriciovigolo/keycloak-angular#readme",
+  "keywords": [
+    "angular",
+    "authentication",
+    "authorization",
+    "keycloak",
+    "keycloak-js"
+  ],
+  "devDependencies": {
+    "@angular-devkit/build-angular": "^15.0.1",
+    "@angular-devkit/core": "^15.0.1",
+    "@angular-eslint/builder": "15.1.0",
+    "@angular-eslint/eslint-plugin": "15.1.0",
+    "@angular-eslint/eslint-plugin-template": "15.1.0",
+    "@angular-eslint/schematics": "15.1.0",
+    "@angular-eslint/template-parser": "15.1.0",
+    "@angular/cli": "^15.0.1",
+    "@angular/common": "^15.0.1",
+    "@angular/compiler": "^15.0.1",
+    "@angular/compiler-cli": "^15.0.1",
+    "@angular/core": "^15.0.1",
+    "@angular/language-service": "^15.0.1",
+    "@angular/platform-browser": "^15.0.1",
+    "@angular/platform-browser-dynamic": "^15.0.1",
+    "@angular/router": "^15.0.1",
+    "@types/jasmine": "^4.0.3",
+    "@types/jasminewd2": "^2.0.10",
+    "@types/node": "^17.0.23",
+    "@typescript-eslint/eslint-plugin": "^5.45.0",
+    "@typescript-eslint/parser": "^5.45.0",
+    "concurrently": "^7.6.0",
+    "eslint": "^8.28.0",
+    "jasmine-core": "^4.5.0",
+    "jasmine-spec-reporter": "^7.0.0",
+    "karma": "~6.4.1",
+    "karma-chrome-launcher": "~3.1.1",
+    "karma-coverage-istanbul-reporter": "~3.0.3",
+    "karma-jasmine": "~5.1.0",
+    "karma-jasmine-html-reporter": "^2.0.0",
+    "keycloak-js": "^20.0.2",
+    "ng-packagr": "^15.0.1",
+    "prettier": "^2.8.0",
+    "protractor": "~7.0.0",
+    "rxjs": "^7.5.5",
+    "shx": "^0.3.4",
+    "ts-node": "^10.7.0",
+    "typescript": "4.8.2",
+    "zone.js": "~0.12.0"
+  },
+  "dependencies": {
+    "keycloak-angular": "^13.0.0",
+    "tslib": "^2.3.1"
+  }
+}
