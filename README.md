@@ -6,11 +6,37 @@ This repo is a demonstration of this process using Keycloak as Identity provider
 
 I created a custom authentication flow in keycloak in which I configured different steps for different levels of authentication (in our case we have normal and transfer levels)
 
-To run the app you must first go to keycloak-angular directory and run the following commands:
+## Run and configure keycloak
+
+First go to config folder and type
+
+```sh
+docker-compose up -d
+```
+
+This will start a keycloak container exposed on the local port 8080. Once it's up and ready, run the script to create terraform client in keycloak
+
+```sh
+./create-terraform-client.sh
+```
+
+We will use then terraform to setup new realm, client, user, custom authentication flow, acr/loa mapping etc...
+
+Once you got terraform installed, type the following commands:
+
+```sh
+terraform init
+terraform apply
+```
+You will be prompted to enter a value, so type yes then press enter. That's it you got keycloak up and configured
+
+## Run the application
+
+To run the app you must go to keycloak-angular directory and run the following commands:
 
 ```sh
 npm install keycloak-angular keycloak-js
-npm run showcase
+npm run showcase:example
 ```
 
 This angular app used for demonstration is based on this [gihtub repo](https://github.com/mauriciovigolo/keycloak-angular#installation) 
