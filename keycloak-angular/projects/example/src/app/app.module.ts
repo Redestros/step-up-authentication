@@ -14,7 +14,7 @@ function initializeKeycloak(keycloak: KeycloakService) {
         clientId: 'step-up-client'
       },
       initOptions: {
-        onLoad: 'check-sso',
+        onLoad: 'login-required',
         silentCheckSsoRedirectUri:
           window.location.origin + '/assets/silent-check-sso.html'
       }
