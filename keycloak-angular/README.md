@@ -52,21 +52,17 @@ Note that `keycloak-js` is a peer dependency of Keycloak Angular. This change al
 
 | Angular | keycloak-js | keycloak-angular |       Support       |
 | :-----: | :---------: | :--------------: | :-----------------: |
-|  15.x   |   18 - 20   |      13.x.x      | New Features / Bugs |
-|  14.x   |   18 - 19   |      12.x.x      |        Bugs         |
+|  17.x   |   18 - 24   |      15.x.x      | New Features / Bugs |
+|  16.x   |   18 - 24   |      14.x.x      |        Bugs         |
+|  15.x   |   18 - 21   |      13.x.x      |          -          |
+|  14.x   |   18 - 19   |      12.x.x      |          -          |
 |  14.x   |   10 - 17   |      11.x.x      |          -          |
-|  13.x   |     18      |      10.x.x      |          -          |
-|  13.x   |   10 - 17   |      9.x.x       |          -          |
 
-Only the latest version of Angular in the table above is actively supported. This is due to the fact that compilation of Angular libraries is [incompatible between major versions](https://angular.io/guide/creating-libraries#ensuring-library-version-compatibility).
-
-_Note_: Only for keycloak-angular **v.9**, there is the need to add `allowSyntheticDefaultImports: true` in the tsconfig.json file in your project. This is related to this [issue in the keycloak project](https://github.com/keycloak/keycloak/issues/9045). From keycloak-angular v.10 on, there is no need to set this configuration.
+Only the latest version of Angular in the table above is actively supported. This is due to the fact that compilation of Angular libraries might be [incompatible between major versions](https://angular.io/guide/creating-libraries#ensuring-library-version-compatibility).
 
 #### Choosing the right keycloak-js version
 
-The Keycloak client documentation recommends to use the same version of your Keycloak installation.
-
-> A best practice is to load the JavaScript adapter directly from Keycloak Server as it will automatically be updated when you upgrade the server. If you copy the adapter to your web application instead, make sure you upgrade the adapter only after you have upgraded the server.
+The Keycloak client documentation recommends to use the same version of your Keycloak server installation.
 
 ## Setup
 
@@ -176,7 +172,7 @@ export class AuthGuard extends KeycloakAuthGuard {
     const requiredRoles = route.data.roles;
 
     // Allow the user to proceed if no additional roles are required to access the route.
-    if (!(requiredRoles instanceof Array) || requiredRoles.length === 0) {
+    if (!Array.isArray(requiredRoles) || requiredRoles.length === 0) {
       return true;
     }
 
@@ -209,7 +205,9 @@ await keycloak.init({
 
     const isGetRequest = 'GET' === method.toUpperCase();
     const acceptablePaths = ['/assets', '/clients/public'];
-    const isAcceptablePathMatch = urls.some((path) => url.includes(path));
+    const isAcceptablePathMatch = acceptablePaths.some((path) =>
+      url.includes(path)
+    );
 
     return !(isGetRequest && isAcceptablePathMatch);
   }
@@ -233,7 +231,7 @@ await keycloak.init({
       window.location.origin + '/assets/silent-check-sso.html'
   },
   bearerExcludedUrls: ['/assets', '/clients/public'],
-  shouldUpdateToken: (request) => {
+  shouldUpdateToken(request) {
     return !request.headers.get('token-update') === 'false';
   }
 });
@@ -247,8 +245,8 @@ For example you make keycloak-angular auto refreshing your access token when exp
 
 ```ts
 keycloakService.keycloakEvents$.subscribe({
-  next: (e) => {
-    if (e.type == KeycloakEventType.OnTokenExpired) {
+  next(event) {
+    if (event.type == KeycloakEventType.OnTokenExpired) {
       keycloakService.updateToken(20);
     }
   }
@@ -275,12 +273,12 @@ document.
 <!-- prettier-ignore-start -->
 [license-mit-badge]: https://img.shields.io/badge/License-MIT-yellow
 [license-mit]: https://opensource.org/licenses/MIT
-[build-badge]: https://img.shields.io/github/workflow/status/mauriciovigolo/keycloak-angular/CI?label=CI&logo=github
-[build]: https://github.com/mauriciovigolo/keycloak-angular/actions/workflows/main.yml
-[vulnerabilities-badge]: https://img.shields.io/snyk/vulnerabilities/github/mauriciovigolo/keycloak-angular?logo=snyk
+[build-badge]: https://img.shields.io/github/actions/workflow/status/mauriciovigolo/keycloak-angular/main.yml?branch=main&label=CI&logo=github
+[build]: https://github.com/mauriciovigolo/keycloak-angular/actions/workflows/main.yml?query=branch%3Amain
+[vulnerabilities-badge]: https://snyk.io/test/github/mauriciovigolo/keycloak-angular/badge.svg
 [vulnerabilities]: https://snyk.io/test/github/mauriciovigolo/keycloak-angular
-[npm-version-badge]: https://img.shields.io/npm/v/keycloak-angular
-[npm-badge]: https://img.shields.io/npm/dm/keycloak-angular
+[npm-version-badge]: https://img.shields.io/npm/v/keycloak-angular?logo=npm&logoColor=fff
+[npm-badge]: https://img.shields.io/npm/dm/keycloak-angular?logo=npm&logoColor=fff
 [npm]: https://www.npmjs.com/package/keycloak-angular
 [contributors-badge]: https://img.shields.io/badge/all_contributors-5-orange
 [discord-badge]: https://img.shields.io/discord/790617227853692958?color=7389d8&labelColor=6a7ec2&logo=discord&logoColor=fff
