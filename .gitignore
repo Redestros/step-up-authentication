@@ -1,3 +1,4 @@
 config/.terraform
 config/.terraform*
 config/terraform*
+.DS_Store
