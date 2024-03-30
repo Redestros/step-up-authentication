@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { KeycloakService } from 'keycloak-angular';
 import { KeycloakProfile } from 'keycloak-js';
+import { TransferService } from './transfer.service';
 
 @Component({
   selector: 'app-root',
@@ -11,8 +12,9 @@ export class AppComponent implements OnInit {
   public isLoggedIn = false;
   public userProfile: KeycloakProfile | null = null;
   public token: string;
+  public donationResult: string;
 
-  constructor(private readonly keycloak: KeycloakService) {}
+  constructor(private readonly keycloak: KeycloakService, private transferService: TransferService) {}
 
   public async ngOnInit() {
     this.isLoggedIn = await this.keycloak.isLoggedIn();
@@ -35,7 +37,7 @@ export class AppComponent implements OnInit {
     this.keycloak.logout();
   }
 
-  public transfer() {
+  public stepUp() {
     this.keycloak.login({
       acr: {
         values: ['transfer'],
@@ -43,8 +45,14 @@ export class AppComponent implements OnInit {
       }
     })
   }
+  public async transfer() {
+
+     this.transferService.donateMoney().subscribe(result => console.log(result));
+
+  }
 
   public async printToken() {
-    this.token = JSON.stringify(this.keycloak.getKeycloakInstance().idTokenParsed, null, 2);
+    this.token = JSON.stringify(this.keycloak.getKeycloakInstance().tokenParsed, null, 2);
+    console.log(this.keycloak.getKeycloakInstance().token)
   }
 }

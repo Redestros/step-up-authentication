@@ -4,6 +4,7 @@ import { KeycloakAngularModule, KeycloakService } from 'keycloak-angular';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { HttpClientModule } from '@angular/common/http';
 
 function initializeKeycloak(keycloak: KeycloakService) {
   return () =>
@@ -23,13 +24,14 @@ function initializeKeycloak(keycloak: KeycloakService) {
 
 @NgModule({
   declarations: [AppComponent],
-  imports: [BrowserModule, AppRoutingModule, KeycloakAngularModule],
+  imports: [BrowserModule, AppRoutingModule, KeycloakAngularModule, HttpClientModule],
   providers: [
     {
       provide: APP_INITIALIZER,
       useFactory: initializeKeycloak,
       multi: true,
-      deps: [KeycloakService]
+      deps: [KeycloakService],
+      
     }
   ],
   bootstrap: [AppComponent]
