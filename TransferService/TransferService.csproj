@@ -5,7 +5,7 @@
         <Nullable>enable</Nullable>
         <ImplicitUsings>enable</ImplicitUsings>
         <InvariantGlobalization>true</InvariantGlobalization>
-        <RootNamespace>TrasnferService</RootNamespace>
+        <RootNamespace>TransferService</RootNamespace>
     </PropertyGroup>
 
     <ItemGroup>

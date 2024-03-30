@@ -1,6 +1,7 @@
 <h1>Keycloak Angular Example</h1>
 
-<button *ngIf="isLoggedIn" type="button" (click)="transfer()">Transfer 100$ to friend</button>
+<button *ngIf="isLoggedIn" type="button" (click)="stepUp()">Step up</button>
+<button *ngIf="isLoggedIn" type="button" (click)="transfer()">Donate 100$ to Palestine</button>
 <button *ngIf="isLoggedIn" type="button" (click)="printToken()">Show Token</button>
 <button *ngIf="isLoggedIn" type="button" (click)="logout()">Log out</button>
 <button *ngIf="!isLoggedIn" type="button" (click)="login()">Log in</button>

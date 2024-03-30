@@ -1,6 +1,6 @@
-namespace TrasnferService;
+namespace TransferService;
 
-public class ServiceCollectionExtensions
+public static class ServiceCollectionExtensions
 {
-    
+     
 }
