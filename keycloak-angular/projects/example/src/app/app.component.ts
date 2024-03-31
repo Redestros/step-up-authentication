@@ -12,7 +12,7 @@ export class AppComponent implements OnInit {
   public isLoggedIn = false;
   public userProfile: KeycloakProfile | null = null;
   public token: string;
-  public donationResult: string;
+  public donationResult: any;
 
   constructor(private readonly keycloak: KeycloakService, private transferService: TransferService) {}
 
@@ -47,7 +47,14 @@ export class AppComponent implements OnInit {
   }
   public async transfer() {
 
-     this.transferService.donateMoney().subscribe(result => console.log(result));
+     this.transferService.donateMoney().subscribe(
+      (result) => {
+        console.log(result)
+        this.donationResult = JSON.stringify(result)},
+      (error) => {
+        console.log(this.donationResult)
+        this.donationResult = JSON.stringify(error.error)}
+        );
 
   }
 

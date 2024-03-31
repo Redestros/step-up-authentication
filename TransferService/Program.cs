@@ -1,8 +1,13 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.IdentityModel.Tokens;
+using TransferService.Auth;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+
+builder.Services.AddSingleton<IAuthorizationHandler, TransferLevelHandler>();
+builder.Services.AddSingleton<IAuthorizationMiddlewareResultHandler, AuthorizationResultTransformer>();
 
 builder.Services.AddAuthentication()
     .AddJwtBearer(options =>
@@ -18,10 +23,9 @@ builder.Services.AddAuthentication()
         options.MapInboundClaims = false;
     });
 
-
 builder.Services.AddAuthorizationBuilder()
-    .AddPolicy("transfer", policyBuilder => 
-        policyBuilder.RequireClaim("acr", "transfer"));
+    .AddPolicy("transfer",
+        policyBuilder => policyBuilder.AddRequirements(new TransferLevelRequirement()));
 
 builder.Services.AddCors(options =>
 {
@@ -51,7 +55,7 @@ app.UseCors();
 app.UseAuthentication();
 app.UseAuthorization();
 
-app.MapPost("/donate", () => new { Message = "You donated 100$ to Palestine, Thanks <3"})
+app.MapPost("/donate", () => new { Message = "You donated 100$ to Palestine, Thanks <3" })
     .WithName("Donate")
     .RequireAuthorization("transfer")
     .WithOpenApi();
