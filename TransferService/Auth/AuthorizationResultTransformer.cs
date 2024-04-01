@@ -23,6 +23,10 @@ public class AuthorizationResultTransformer : IAuthorizationMiddlewareResultHand
                     requirement is TransferLevelRequirement))
             {
                 context.Response.StatusCode = (int)HttpStatusCode.Forbidden;
+
+                context.Response.Headers.WWWAuthenticate =
+                    "Bearer error=\"insufficient_user_authentication\", error_description=\"A different authentication level is required\", acr_values=\"transfer\"";
+
                 var responseBody = new StepUpChallenge("transfer", 0);
                 await context.Response.WriteAsJsonAsync(responseBody);
             }
@@ -33,7 +37,6 @@ public class AuthorizationResultTransformer : IAuthorizationMiddlewareResultHand
 
     private class StepUpChallenge
     {
-        public ChallengeError Error { get; }
         public string Acr { get; }
         public int MaxAge { get; }
 
@@ -41,14 +44,6 @@ public class AuthorizationResultTransformer : IAuthorizationMiddlewareResultHand
         {
             Acr = acr;
             MaxAge = maxAge;
-            Error = new ChallengeError();
         }
-    }
-    
-    private class ChallengeError
-    {
-        public string Code { get; } = "insufficient_user_authentication";
-
-        public string Value { get; set; } = "The authentication event associated with the access token presented with the request does not meet the authentication requirements of the protected resource";
     }
 }
