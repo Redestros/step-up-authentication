@@ -2,9 +2,9 @@
 
 Ever wondered how banking apps require additional challenge when we make a sensitive operation like transferring money ? This practice of requiring additional levels of authentication is not limited to financial apps, in fact it has become popular nowadays and it is called **Step-up Authentication.**
 
-This repo is a demonstration of this process using Keycloak as Identity provider and Angular for developing the relaying party.
+This repo is a demonstration of this process using Keycloak as Identity provider, Angular for developing the relaying party and Dotnet for developing the resource server.
 
-I created a custom authentication flow in keycloak in which I configured different steps for different levels of authentication (in our case we have normal and transfer levels)
+You can read more about this project in this [article](https://medium.com/@ahmedmohamedelahmar/step-up-authentication-with-keycloak-9906ba819964)
 
 ## Run and configure keycloak
 
