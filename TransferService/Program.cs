@@ -1,10 +1,12 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.IdentityModel.Tokens;
+using Serilog;
 using TransferService.Auth;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+builder.Host.UseSerilog((_, config) => config.ReadFrom.Configuration(builder.Configuration));
 
 builder.Services.AddSingleton<IAuthorizationHandler, TransferLevelHandler>();
 builder.Services.AddSingleton<IAuthorizationMiddlewareResultHandler, AuthorizationResultTransformer>();
