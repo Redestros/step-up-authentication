@@ -1,7 +1,6 @@
-version: "3.9"
 services:
   postgres:
-      image: postgres
+      image: postgres:16
       container_name: keycloak-db
       volumes:
         - postgres_data:/var/lib/postgresql/data
@@ -12,7 +11,7 @@ services:
       ports:
         - "5432:5432"
   keycloak:
-      image: quay.io/keycloak/keycloak:24.0.2
+      image: quay.io/keycloak/keycloak:26.8.0
       container_name: keycloak-1
       command:
         - start-dev
@@ -24,8 +23,8 @@ services:
         KC_DB_PASSWORD: password
         KC_DB: postgres
         KC_HOSTNAME: localhost
-        KEYCLOAK_ADMIN: admin
-        KEYCLOAK_ADMIN_PASSWORD: admin
+        KC_BOOTSTRAP_ADMIN_USERNAME: admin
+        KC_BOOTSTRAP_ADMIN_PASSWORD: admin
       ports:
         - "8080:8080"
       depends_on:
