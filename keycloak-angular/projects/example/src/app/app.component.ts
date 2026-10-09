@@ -1,6 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { KeycloakService } from 'keycloak-angular';
-import { KeycloakProfile } from 'keycloak-js';
+import { Component, OnInit, inject } from '@angular/core';
+import Keycloak, { KeycloakProfile } from 'keycloak-js';
 import { TransferService } from './transfer.service';
 
 @Component({
@@ -14,10 +13,11 @@ export class AppComponent implements OnInit {
   public token: string;
   public donationResult: any;
 
-  constructor(private readonly keycloak: KeycloakService, private transferService: TransferService) {}
+  private readonly keycloak = inject(Keycloak);
+  private readonly transferService = inject(TransferService);
 
   public async ngOnInit() {
-    this.isLoggedIn = await this.keycloak.isLoggedIn();
+    this.isLoggedIn = !!this.keycloak.authenticated;
 
     if (this.isLoggedIn) {
       this.userProfile = await this.keycloak.loadUserProfile();
@@ -59,7 +59,7 @@ export class AppComponent implements OnInit {
   }
 
   public async printToken() {
-    this.token = JSON.stringify(this.keycloak.getKeycloakInstance().tokenParsed, null, 2);
-    console.log(this.keycloak.getKeycloakInstance().token)
+    this.token = JSON.stringify(this.keycloak.tokenParsed, null, 2);
+    console.log(this.keycloak.token)
   }
 }
