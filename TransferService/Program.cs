@@ -59,7 +59,6 @@ app.UseAuthorization();
 
 app.MapPost("/donate", () => new { Message = "You donated 100$ to Palestine, Thanks <3" })
     .WithName("Donate")
-    .RequireAuthorization("transfer")
-    .WithOpenApi();
+    .RequireAuthorization("transfer");
 
 app.Run();
