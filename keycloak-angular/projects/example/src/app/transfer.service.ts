@@ -12,6 +12,6 @@ export class TransferService {
   private httpClient = inject(HttpClient);
 
   public donateMoney() {
-    return this.httpClient.post<string>(this.url + "/donate", {})
+    return this.httpClient.post<{ message: string }>(this.url + "/donate", {})
   }
 }

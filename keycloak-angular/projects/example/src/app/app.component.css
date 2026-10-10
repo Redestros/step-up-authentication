@@ -1,0 +1,193 @@
+.shell {
+  max-width: 880px;
+  margin: 0 auto;
+  padding: 20px 16px 48px;
+}
+
+.topbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.brand,
+.topbar-actions,
+.person,
+.level-head,
+.token-head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.brand {
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.logo {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  background: var(--accent-bg);
+  color: var(--accent);
+}
+
+.user-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 3px 12px 3px 3px;
+  border: 1px solid var(--line);
+  border-radius: 99px;
+  font-size: 13px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 16px;
+}
+
+@media (min-width: 640px) {
+  .grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.token {
+  grid-column: 1 / -1;
+}
+
+.person {
+  margin-bottom: 20px;
+}
+
+.name {
+  font-weight: 600;
+}
+
+.level-head,
+.token-head {
+  justify-content: space-between;
+}
+
+.token-head {
+  margin-bottom: 12px;
+}
+
+.token-head .label {
+  margin: 0;
+}
+
+.meter {
+  display: flex;
+  gap: 6px;
+  margin-top: 8px;
+}
+
+.seg {
+  height: 6px;
+  flex: 1;
+  border-radius: 3px;
+  background: var(--line);
+}
+
+.seg.on {
+  background: var(--accent);
+}
+
+.level-note {
+  margin-top: 8px;
+  font-size: 13px;
+}
+
+.amount {
+  font-size: 32px;
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+.amount-note {
+  margin: 2px 0 16px;
+  font-size: 13px;
+}
+
+.banner .btn {
+  margin-top: 10px;
+  border-color: currentColor;
+  color: inherit;
+}
+
+.banner p {
+  margin-top: 2px;
+}
+
+.claims {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 4px 20px;
+  margin: 0 0 16px;
+  font-family: var(--mono);
+  font-size: 13px;
+}
+
+.claims dt {
+  color: var(--muted);
+}
+
+.claims dd {
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+
+.level-ok {
+  color: var(--ok);
+}
+
+.token-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.all-claims {
+  flex: 1 1 280px;
+  font-size: 13px;
+}
+
+.all-claims summary {
+  cursor: pointer;
+  color: var(--muted);
+}
+
+.all-claims pre {
+  max-height: 260px;
+  margin: 8px 0 0;
+  padding: 12px;
+  overflow: auto;
+  border-radius: 8px;
+  background: var(--bg);
+  font: 12px/1.5 var(--mono);
+}
+
+.signin {
+  max-width: 420px;
+  margin: 48px auto 0;
+  text-align: center;
+}
+
+.signin h1 {
+  font-size: 20px;
+}
+
+.signin .btn {
+  margin-top: 16px;
+}

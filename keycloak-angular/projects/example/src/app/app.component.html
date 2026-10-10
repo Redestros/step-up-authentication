@@ -1,54 +1,180 @@
-<h1>Keycloak Angular Example</h1>
+<div class="shell">
+  <header class="topbar">
+    <div class="brand">
+      <span class="logo" aria-hidden="true">
+        <svg class="icon" viewBox="0 0 24 24">
+          <path d="M12 3l8 3v5.5c0 4.7-3.2 7.9-8 9.5-4.8-1.6-8-4.8-8-9.5V6z" />
+          <path d="M9 12l2 2 4-4" />
+        </svg>
+      </span>
+      <span>Step up</span>
+    </div>
 
-@if (isLoggedIn) {
-  <button type="button" (click)="stepUp()">Step up</button>
-}
-@if (isLoggedIn) {
-  <button type="button" (click)="transfer()">Donate 100$ to Palestine</button>
-}
-@if (isLoggedIn) {
-  <button type="button" (click)="printToken()">Show Token</button>
-}
-@if (isLoggedIn) {
-  <button type="button" (click)="logout()">Log out</button>
-}
-@if (!isLoggedIn) {
-  <button type="button" (click)="login()">Log in</button>
-}
+    <div class="topbar-actions">
+      <button
+        type="button"
+        class="btn btn-icon"
+        (click)="toggleTheme()"
+        [attr.aria-label]="
+          theme() === 'dark' ? 'Switch to light theme' : 'Switch to dark theme'
+        "
+      >
+        @if (theme() === 'dark') {
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <circle cx="12" cy="12" r="4" />
+            <path
+              d="M12 3v1.5M12 19.5V21M3 12h1.5M19.5 12H21M5.6 5.6l1.1 1.1M17.3 17.3l1.1 1.1M5.6 18.4l1.1-1.1M17.3 6.7l1.1-1.1"
+            />
+          </svg>
+        } @else {
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5z" />
+          </svg>
+        }
+      </button>
 
-@if (userProfile) {
-  <h2>User information</h2>
-  <table>
-    @if (userProfile.username) {
-      <tr>
-        <th scope="row">Username</th>
-        <td>{{ userProfile.username }}</td>
-      </tr>
-    }
-    @if (userProfile.firstName) {
-      <tr>
-        <th scope="row">First name</th>
-        <td>{{ userProfile.firstName }}</td>
-      </tr>
-    }
-    @if (userProfile.lastName) {
-      <tr>
-        <th scope="row">First name</th>
-        <td>{{ userProfile.lastName }}</td>
-      </tr>
-    }
-    @if (userProfile.email) {
-      <tr>
-        <th scope="row">E-mail</th>
-        <td>{{ userProfile.email }}</td>
-      </tr>
-    }
-    <tr>
-      <th scope="row">E-mail verified</th>
-      <td>{{ userProfile.emailVerified ? 'Yes' : 'No' }}</td>
-    </tr>
-  </table>
-  <pre>{{ donationResult }}</pre>
-  <br />
-  <pre>{{ token }}</pre>
-}
+      @if (isLoggedIn()) {
+        <span class="user-chip">
+          <span class="avatar avatar-sm" aria-hidden="true">{{
+            initials()
+          }}</span>
+          {{ displayName() }}
+        </span>
+        <button type="button" class="btn btn-ghost" (click)="logout()">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path
+              d="M14 8V6a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h7a2 2 0 0 0 2-2v-2"
+            />
+            <path d="M9 12h12l-3-3m3 3l-3 3" />
+          </svg>
+          Sign out
+        </button>
+      }
+    </div>
+  </header>
+
+  @if (isLoggedIn()) {
+    <main class="grid">
+      <section class="card" aria-labelledby="session-title">
+        <h2 class="label" id="session-title">Your session</h2>
+
+        <div class="person">
+          <span class="avatar" aria-hidden="true">{{ initials() }}</span>
+          <div>
+            <div class="name">{{ displayName() }}</div>
+            <div class="muted">{{ userProfile()?.email }}</div>
+          </div>
+        </div>
+
+        <div class="level-head">
+          <span class="muted">Security level</span>
+          <span class="pill" [class.pill-ok]="level() === 2">{{
+            level() === 2 ? 'Transfer' : 'Standard'
+          }}</span>
+        </div>
+        <div
+          class="meter"
+          role="img"
+          [attr.aria-label]="'Security level ' + level() + ' of 2'"
+        >
+          <span class="seg on"></span>
+          <span class="seg" [class.on]="level() === 2"></span>
+        </div>
+        <p class="muted level-note">
+          {{
+            level() === 2
+              ? 'Verified with a one-time code.'
+              : 'Transfers need a one-time code.'
+          }}
+        </p>
+      </section>
+
+      <section class="card" aria-labelledby="donation-title">
+        <h2 class="label" id="donation-title">Donation</h2>
+        <div class="amount">$100</div>
+        <p class="muted amount-note">One-off, sent from your account.</p>
+
+        <button
+          type="button"
+          class="btn btn-primary btn-block"
+          (click)="donate()"
+        >
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M10 14L21 3" />
+            <path
+              d="M21 3l-6.5 18a.55.55 0 0 1-1 0L10 14l-7-3.5a.55.55 0 0 1 0-1z"
+            />
+          </svg>
+          {{ sending() ? 'Sending…' : 'Donate $100' }}
+        </button>
+
+        @if (challenge(); as c) {
+          <div class="banner banner-warn" role="alert">
+            <div class="banner-title">
+              <svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
+                <rect x="5" y="11" width="14" height="10" rx="2" />
+                <path d="M8 11V7a4 4 0 0 1 8 0v4" />
+              </svg>
+              Verify it's you to continue
+            </div>
+            <p>This action needs a stronger sign-in than your session has.</p>
+            <button type="button" class="btn" (click)="verify(c)">
+              Verify with a one-time code
+            </button>
+          </div>
+        }
+
+        @if (banner(); as b) {
+          <div
+            class="banner"
+            [class.banner-ok]="b.kind === 'ok'"
+            [class.banner-error]="b.kind === 'error'"
+            [attr.role]="b.kind === 'ok' ? 'status' : 'alert'"
+          >
+            {{ b.text }}
+          </div>
+        }
+      </section>
+
+      <section class="card token" aria-labelledby="token-title">
+        <div class="token-head">
+          <h2 class="label" id="token-title">Access token</h2>
+          @if (token()?.exp; as exp) {
+            <span class="muted level-note"
+              >Expires at {{ exp * 1000 | date: 'mediumTime' }}</span
+            >
+          }
+        </div>
+
+        <dl class="claims">
+          <dt>preferred_username</dt>
+          <dd>"{{ token()?.['preferred_username'] }}"</dd>
+          <dt>acr</dt>
+          <dd [class.level-ok]="level() === 2">"{{ token()?.acr }}"</dd>
+          <dt>azp</dt>
+          <dd>"{{ token()?.azp }}"</dd>
+        </dl>
+
+        <div class="token-actions">
+          <button type="button" class="btn" (click)="copyToken()">
+            {{ copied() ? 'Copied' : 'Copy token' }}
+          </button>
+          <details class="all-claims">
+            <summary>All claims</summary>
+            <pre>{{ token() | json }}</pre>
+          </details>
+        </div>
+      </section>
+    </main>
+  } @else {
+    <main class="card signin">
+      <h1>Sign in to continue</h1>
+      <p class="muted">
+        Your session isn't active. Sign in to try step-up authentication.
+      </p>
+      <button type="button" class="btn btn-primary" (click)="login()">
+        Sign in
+      </button>
+    </main>
+  }
+</div>
